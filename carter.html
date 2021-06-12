@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<style type="text/css">
+		html{
+			box-sizing: border-box;
+		}
+		body{
+			background-color: lightgrey;
+			font-family: 'Exo 2', sans-serif; ;
+		}
+		#container{
+			width: 90%;
+			height: 800px;
+			margin: 25px auto;
+			background-color: ghostwhite;
+			border-radius: 10px;
+			/*display: flex;
+			flex-direction: column;
+			justify-content: stretch;*/
+		}
+
+		ul{
+			list-style-type: none;
+			padding: 2em 1.7em;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		ul li{
+			margin-top: 20px;
+			/*margin-left: 0px;*/
+			/*margin-right: 40px;*/
+		}
+		.items{
+			width: 100%;
+			height: 5em;
+			background-color: rgba(255, 187, 135,0.7);
+			border-radius: 10px;
+			padding: 1em 0em;
+
+			/*border: 1px solid black;*/
+
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.itemname{
+			width: 50%;
+			height: 30px;
+			/*background-color: #a36a39;*/
+			margin-left: 5px;
+			text-align: center;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 1.4em;
+
+
+		}
+
+		.quantitydiv, .removediv, .starreddiv{
+			width: calc(50%/3);
+			height: 30px;
+			/*background-color: #a36a39;*/
+			margin-left: 5px;
+			text-align: center;
+			/*padding-top: 0.8em;*/
+		}
+
+		.starreddiv{
+			margin-right: 5px;
+		}
+
+		.minus, .plus{
+			text-align: center;
+			width: 3em;
+			height: 3em;
+			border-radius: 50%;
+			border: none;
+			outline: none;
+			opacity: 0.8;
+			padding: 0;
+			background-color: ;
+		}
+		.minus{
+			margin-right: 4px;
+		}
+		.plus{
+			margin-left: 4px;
+		}
+		.nos{
+			font-size: 1.2em;
+			margin-top: 4px;
+		}
+
+		.remove, .starred {
+			text-align: center;
+			width: 3em;
+			height: 3em;
+			border-radius: 5px;
+			border: none;
+			outline: none;
+			opacity: 0.8;
+		}
+
+		.plus:hover, .minus:hover, .remove:hover, .starred:hover{
+			cursor: pointer;
+		}
+
+		i{
+			font-size: 1.2em;
+		}
+
+		/* on starred <i class="fas fa-star"></i>*/
+
+	/*	@media (max-width: 600px){
+
+		}*/
+		
+		#addnewitem{
+			width: 60px;
+			height: 75px;
+			text-align: center;
+			background-color: steelblue;
+			border-radius: 50%;
+		}
+		#addnewitem button{
+			background: none;
+			text-align: center;
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			border-radius: 50%;
+		}
+		#addnewitem > button: hover{
+			cursor: pointer;
+		}
+		#addnewitem i{
+			font-size: 2em;
+		}
+
+	</style>
+</head>
+<body>
+
+	<section id="container">
+		<ul id="ullist">
+			<li>
+				<div class="items">
+					<div class="itemname">
+						Refrigerator
+					</div>
+					<div class="quantitydiv">
+						<button class="minus"><i class="fas fa-minus"></i></button>
+						<span class="nos">0</span>
+						<button class="plus"><i class="fas fa-plus"></i></button>
+					</div>
+					<div class="removediv">
+						<button class="remove"><i class="fas fa-trash"></i></button>
+					</div>
+					<div class="starreddiv">
+						<button class="starred"><i class="far fa-star"></i></button>
+					</div>
+					
+				</div>
+			</li>
+			
+		</ul>
+
+		<div id="addnewitem"> 
+			<button>
+				<i class="fas fa-plus"></i>
+			</button>
+		</div>
+	</section>
+
+
+
+	<script type="text/javascript">
+		const plus=document.querySelector('.plus')
+		const minus=document.querySelector('.minus')
+		const qty=document.querySelector('.nos')
+		const starred=document.querySelector('.starred')
+		const addNewItem=document.querySelector('#addnewitem button')
+
+
+		let nos=0;
+
+		plus.addEventListener('click',()=>{
+			nos++;
+			qty.innerHTML=nos;
+		})
+		minus.addEventListener('click',()=>{
+			nos=nos===0?nos:nos-1;
+			qty.innerHTML=nos;
+		})
+
+		starred.addEventListener('click',()=>{
+			document.querySelector('.starred i').classList.toggle('far')
+			document.querySelector('.starred i').classList.toggle('fas')
+		})
+
+		addNewItem.addEventListener('click',()=>{
+			console.log('click')
+
+			const newli=document.createElement('li')
+			const cartlist=document.querySelector('#ullist')
+			
+			let newdiv=document.createElement('div')
+			
+			let itemsdiv=document.createElement('div')
+			itemsdiv.classList.add('items')
+
+			let itemnamediv=document.createElement('div')
+			itemnamediv.classList.add('itemname')
+			let newitemname=document.createTextNode('New Item')
+			itemnamediv.append(newitemname)
+			
+
+			let qtydiv=document.createElement('div')
+			qtydiv.classList.add('quantitydiv')
+
+			let minusbutton=document.createElement('button')
+			minusbutton.classList.add('minus')
+			let minusi=document.createElement('i')
+			minusi.classList.add('fas','fa-minus')
+			minusbutton.append(minusi)
+
+			let spannos=document.createElement('span')
+			let spantext=document.createTextNode('0')
+			spannos.append(spantext)
+			spannos.classList.add('nos')
+
+
+			let plusbutton=document.createElement('button')
+			plusbutton.classList.add('plus')
+			let plusi=document.createElement('i')
+			plusi.classList.add('fas','fa-plus')
+			plusbutton.append(plusi)
+
+			qtydiv.append(minusbutton)
+			qtydiv.append(spannos)
+			qtydiv.append(plusbutton)
+
+			
+			let removediv=document.createElement('div')
+			removediv.classList.add('removediv')
+
+			let removebutton=document.createElement('button')
+			removebutton.classList.add('remove')
+			let removei=document.createElement('i')
+			removei.classList.add('fas','fa-trash')
+			removebutton.append(removei)
+
+			removediv.append(removebutton)
+
+
+			let starrediv=document.createElement('div')
+			starrediv.classList.add('starrediv')
+
+			let starredbutton=document.createElement('button')
+			starredbutton.classList.add('starred')
+			let starredi=document.createElement('i')
+			starredi.classList.add('far','fa-star')
+			starredbutton.append(starredi)
+
+			starrediv.append(starredbutton)
+
+
+
+			itemsdiv.append(itemnamediv)
+			itemsdiv.append(qtydiv)
+			itemsdiv.append(removediv)
+			itemsdiv.append(starrediv)
+
+			newli.append(itemsdiv)
+			cartlist.append(newli)
+		})
+
+	</script>
+</body>
+</html>
