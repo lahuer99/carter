@@ -6,6 +6,7 @@ class Items{
 	}
 }
 
+
 const cart=[]
 
 // const divitems=document.querySelectorAll('.items')
@@ -26,42 +27,55 @@ const addNewItem=document.querySelector('#addnewitem button')
 
 
 ullist.addEventListener('click',function(e){
-	if(e.target.className=='plus'){
-		console.dir(e.target)
-		// console.log(e.target.parentElement.parentElement.objectelement.qty++)
-		e.target.parentElement.parentElement.objectelement.qty+=1
-		// nos++;
-		e.target.previousElementSibling.innerHTML=e.target.parentElement.parentElement.objectelement.qty;
+	let clickOn=e.target.className;
+	let objel=e.target.parentElement.parentElement.objectelement;
+	
+	if(clickOn=='plus'){
+		objel.qty+=1
+		e.target.previousElementSibling.innerHTML=objel.qty;
 	}
-	else if(e.target.className=='minus'){
-		console.dir(e.target)
-		// console.log(e.target.parentElement.parentElement.objectelement.qty--)
-		e.target.parentElement.parentElement.objectelement.qty=e.target.parentElement.parentElement.objectelement.qty==0?0:e.target.parentElement.parentElement.objectelement.qty-1;
-		// nos++;
-		e.target.nextElementSibling.innerHTML=e.target.parentElement.parentElement.objectelement.qty;
+	else if(clickOn=='minus'){
+		objel.qty=objel.qty==0?0:objel.qty-1;
+		e.target.nextElementSibling.innerHTML=objel.qty;
 	}
-	else if(e.target.className=='starred'){
+	else if(clickOn=='starred'){
 		e.target.childNodes[0].classList.toggle('far')
 		e.target.childNodes[0].classList.toggle('fas')
-		console.log(e.target.parentElement.parentElement.objectelement.isStarred)
-		e.target.parentElement.parentElement.objectelement.isStarred=!(e.target.parentElement.parentElement.objectelement.isStarred);
-		console.log(e.target.parentElement.parentElement.objectelement.isStarred)
+		objel.isStarred=!(objel.isStarred);
+	}
+	else if(clickOn=='remove'){
+		console.dir(e.target)
+		let toRemove=e.target.parentElement.parentElement;
+		cart.forEach(function(item,index,arr){
+			if(item.itemname==`${toRemove.childNodes[1].innerHTML}`){
+				arr.splice(index,1);
+			}
+		});
+		toRemove.remove();
+
+		if(cart.length==0){
+			let initdiv=document.createElement('div')
+			initdiv.id='init';
+			let initext=document.createTextNode('Cart is empty!')
+			initdiv.append(initext)
+
+			let cont=document.querySelector('#container')
+			cont.insertBefore(initdiv,cont.firstChild)
+		}
 	}
 })
 
 
 addNewItem.addEventListener('click',()=>{
-	console.log('click')
-
 	if(cart.length==0){
 		document.querySelector('#init').remove()
 	}
 
-	const newli=document.createElement('li')
-
+	let newli=document.createElement('li')
 
 	let itemsdiv=document.createElement('div')
 	itemsdiv.classList.add('items')
+
 
 	let imgdiv=document.createElement('div')
 	imgdiv.classList.add('imgdiv')
@@ -69,9 +83,10 @@ addNewItem.addEventListener('click',()=>{
 	imgnode.src='desk.jpeg'
 	imgdiv.append(imgnode)
 
+
 	let itemnamediv=document.createElement('div')
 	itemnamediv.classList.add('itemname')
-	let newitemname=document.createTextNode('New Item')
+	let newitemname=document.createTextNode(`${cart.length}x`)
 	itemnamediv.append(newitemname)
 
 
@@ -89,7 +104,6 @@ addNewItem.addEventListener('click',()=>{
 	spannos.append(spantext)
 	spannos.classList.add('nos')
 
-
 	let plusbutton=document.createElement('button')
 	plusbutton.classList.add('plus')
 	let plusi=document.createElement('i')
@@ -100,17 +114,6 @@ addNewItem.addEventListener('click',()=>{
 	qtydiv.append(spannos)
 	qtydiv.append(plusbutton)
 
-
-	let removediv=document.createElement('div')
-	removediv.classList.add('removediv')
-
-	let removebutton=document.createElement('button')
-	removebutton.classList.add('remove')
-	let removei=document.createElement('i')
-	removei.classList.add('fas','fa-trash')
-	removebutton.append(removei)
-
-	removediv.append(removebutton)
 
 
 	let starrediv=document.createElement('div')
@@ -125,17 +128,30 @@ addNewItem.addEventListener('click',()=>{
 	starrediv.append(starredbutton)
 
 
+
+	let removediv=document.createElement('div')
+	removediv.classList.add('removediv')
+
+	let removebutton=document.createElement('button')
+	removebutton.classList.add('remove')
+	let removei=document.createElement('i')
+	removei.classList.add('fas','fa-trash')
+	removebutton.append(removei)
+
+	removediv.append(removebutton)
+
+
 	itemsdiv.append(imgdiv)
 	itemsdiv.append(itemnamediv)
 	itemsdiv.append(qtydiv)
-	itemsdiv.append(removediv)
 	itemsdiv.append(starrediv)
+	itemsdiv.append(removediv)
+
 
 	newli.append(itemsdiv)
 	ullist.append(newli)
 
 	let newdivitems=document.querySelectorAll('.items')
-	console.dir(newdivitems[newdivitems.length-1])
 	let newitem=new Items(newdivitems[newdivitems.length-1].childNodes[1].innerHTML.trim())
 	newdivitems[newdivitems.length-1].objectelement=newitem;
 
