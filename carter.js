@@ -8,12 +8,14 @@ class Items{
 
 const cart=[]
 
-const divitems=document.querySelectorAll('.items')
+// const divitems=document.querySelectorAll('.items')
 
-const inititem=new Items(divitems[divitems.length-1].childNodes[1].innerHTML.trim())
+// console.dir(divitems[divitems.length-1])
 
-divitems[0].objectelement=inititem;
-cart.push(inititem)
+// const inititem=new Items(divitems[divitems.length-1].childNodes[1].innerHTML.trim())
+
+// divitems[0].objectelement=inititem;
+// cart.push(inititem)
 
 
 
@@ -47,35 +49,25 @@ ullist.addEventListener('click',function(e){
 	}
 })
 
-// plus.addEventListener('click',()=>{
-// nos++;
-// qty.innerHTML=nos;
-// })
-// minus.addEventListener('click',()=>{
-// nos=nos===0?nos:nos-1;
-// qty.innerHTML=nos;
-// })
-
-// starred.addEventListener('click',()=>{
-// document.querySelector('.starred i').classList.toggle('far')
-// document.querySelector('.starred i').classList.toggle('fas')
-// })
-
-
-
-
-// clean up below and add objectelement as well as to array
-
-
 
 addNewItem.addEventListener('click',()=>{
 	console.log('click')
+
+	if(cart.length==0){
+		document.querySelector('#init').remove()
+	}
 
 	const newli=document.createElement('li')
 
 
 	let itemsdiv=document.createElement('div')
 	itemsdiv.classList.add('items')
+
+	let imgdiv=document.createElement('div')
+	imgdiv.classList.add('imgdiv')
+	let imgnode=document.createElement('img')
+	imgnode.src='desk.jpeg'
+	imgdiv.append(imgnode)
 
 	let itemnamediv=document.createElement('div')
 	itemnamediv.classList.add('itemname')
@@ -133,7 +125,7 @@ addNewItem.addEventListener('click',()=>{
 	starrediv.append(starredbutton)
 
 
-
+	itemsdiv.append(imgdiv)
 	itemsdiv.append(itemnamediv)
 	itemsdiv.append(qtydiv)
 	itemsdiv.append(removediv)
@@ -143,11 +135,9 @@ addNewItem.addEventListener('click',()=>{
 	ullist.append(newli)
 
 	let newdivitems=document.querySelectorAll('.items')
-	console.log('==========')
-	console.log(newdivitems)
+	console.dir(newdivitems[newdivitems.length-1])
 	let newitem=new Items(newdivitems[newdivitems.length-1].childNodes[1].innerHTML.trim())
-	console.log(newitem)
 	newdivitems[newdivitems.length-1].objectelement=newitem;
-	cart.push(newitem)
 
+	cart.push(newitem)
 })
