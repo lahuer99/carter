@@ -66,7 +66,16 @@ ullist.addEventListener('click',function(e){
 })
 
 
-addNewItem.addEventListener('click',()=>{
+async function getName(){
+	let newName= await fetch('https://animechan.vercel.app/api/random')
+      					.then(response => response.json())
+      					.then(quotes => quotes)
+    return newName;
+}
+
+
+
+addNewItem.addEventListener('click',async ()=>{
 	if(cart.length==0){
 		document.querySelector('#init').remove()
 	}
@@ -86,7 +95,8 @@ addNewItem.addEventListener('click',()=>{
 
 	let itemnamediv=document.createElement('div')
 	itemnamediv.classList.add('itemname')
-	let newitemname=document.createTextNode(`${cart.length}x`)
+	let {anime,quote,character}=await getName();
+	let newitemname=document.createTextNode(`${anime}`)
 	itemnamediv.append(newitemname)
 
 
